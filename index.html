@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 <html lang="pt-PT">
-<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
-	
+<head>
+	<meta charset="UTF-8">
 		<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
 
 	<!-- This site is optimized with the Yoast SEO plugin v18.9 - https://yoast.com/wordpress/plugins/seo/ -->
-	<title>Mr Power Caps - Mr Power Caps</title><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%20Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap" /></noscript><link rel="stylesheet" href="https://mrpowercaps.com/wp-content/cache/min/1/928e700701fd94661bfe503b3a817001.css" media="all" data-minify="1" />
+	<title>Mr Power Caps - Mr Power Caps</title>
 	<link rel="canonical" href="https://mrpowercaps.com/" />
 	<meta property="og:locale" content="pt_PT" />
 	<meta property="og:type" content="website" />
@@ -14,12 +14,12 @@
 	<meta property="og:description" content="GANHE MASSA MUSCULAR, ENERGIA E COMECE SEUS TREINOS COM FORÇA TOTAL! Você não precisa de vários suplementos, o novo MR Power Caps irá esculpir o seu corpo e te dar a energia que você precisa!! FÓRMULA AMERICANA, COM ALTA TECNOLOGIA E PERFORMANCE! Ganhe massa muscular; Trinque o abdômen eliminando a gordura localizada; Controle a ansiedade;&hellip; Continue a ler Mr Power Caps" />
 	<meta property="og:url" content="https://mrpowercaps.com/" />
 	<meta property="og:site_name" content="Mr Power Caps" />
-	<meta property="article:modified_time" content="2022-05-26T22:08:23+00:00" />
+	<meta property="article:modified_time" content="2022-06-13T12:17:15+00:00" />
 	<meta property="og:image" content="https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:label1" content="Tempo estimado de leitura" />
 	<meta name="twitter:data1" content="17 minutos" />
-	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mrpowercaps.com/#website","url":"https://mrpowercaps.com/","name":"Mr Power Caps","description":"GANHE MASSA MUSCULAR, ENERGIA E COMECE SEUS TREINOS COM FOR&Ccedil;A TOTAL!!","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://mrpowercaps.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"pt-PT"},{"@type":"ImageObject","inLanguage":"pt-PT","@id":"https://mrpowercaps.com/#primaryimage","url":"https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp","contentUrl":"https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp","width":500,"height":92},{"@type":"WebPage","@id":"https://mrpowercaps.com/#webpage","url":"https://mrpowercaps.com/","name":"Mr Power Caps - Mr Power Caps","isPartOf":{"@id":"https://mrpowercaps.com/#website"},"primaryImageOfPage":{"@id":"https://mrpowercaps.com/#primaryimage"},"datePublished":"2022-01-07T13:44:57+00:00","dateModified":"2022-05-26T22:08:23+00:00","breadcrumb":{"@id":"https://mrpowercaps.com/#breadcrumb"},"inLanguage":"pt-PT","potentialAction":[{"@type":"ReadAction","target":["https://mrpowercaps.com/"]}]},{"@type":"BreadcrumbList","@id":"https://mrpowercaps.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Início"}]}]}</script>
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mrpowercaps.com/#website","url":"https://mrpowercaps.com/","name":"Mr Power Caps","description":"GANHE MASSA MUSCULAR, ENERGIA E COMECE SEUS TREINOS COM FOR&Ccedil;A TOTAL!!","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://mrpowercaps.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"pt-PT"},{"@type":"ImageObject","inLanguage":"pt-PT","@id":"https://mrpowercaps.com/#primaryimage","url":"https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp","contentUrl":"https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp","width":500,"height":92},{"@type":"WebPage","@id":"https://mrpowercaps.com/#webpage","url":"https://mrpowercaps.com/","name":"Mr Power Caps - Mr Power Caps","isPartOf":{"@id":"https://mrpowercaps.com/#website"},"primaryImageOfPage":{"@id":"https://mrpowercaps.com/#primaryimage"},"datePublished":"2022-01-07T13:44:57+00:00","dateModified":"2022-06-13T12:17:15+00:00","breadcrumb":{"@id":"https://mrpowercaps.com/#breadcrumb"},"inLanguage":"pt-PT","potentialAction":[{"@type":"ReadAction","target":["https://mrpowercaps.com/"]}]},{"@type":"BreadcrumbList","@id":"https://mrpowercaps.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Início"}]}]}</script>
 	<!-- / Yoast SEO plugin. -->
 
 
@@ -40,17 +40,17 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-	
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://mrpowercaps.com/wp-includes/css/dist/block-library/style.min.css?ver=6.0' media='all' />
 <style id='wp-block-library-theme-inline-css'>
 .wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}
 </style>
 <style id='global-styles-inline-css'>
 body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #FFFFFF;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--dark-gray: #28303D;--wp--preset--color--gray: #39414D;--wp--preset--color--green: #D1E4DD;--wp--preset--color--blue: #D1DFE4;--wp--preset--color--purple: #D1D1E4;--wp--preset--color--red: #E4D1D1;--wp--preset--color--orange: #E4DAD1;--wp--preset--color--yellow: #EEEADD;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--gradient--purple-to-yellow: linear-gradient(160deg, #D1D1E4 0%, #EEEADD 100%);--wp--preset--gradient--yellow-to-purple: linear-gradient(160deg, #EEEADD 0%, #D1D1E4 100%);--wp--preset--gradient--green-to-yellow: linear-gradient(160deg, #D1E4DD 0%, #EEEADD 100%);--wp--preset--gradient--yellow-to-green: linear-gradient(160deg, #EEEADD 0%, #D1E4DD 100%);--wp--preset--gradient--red-to-yellow: linear-gradient(160deg, #E4D1D1 0%, #EEEADD 100%);--wp--preset--gradient--yellow-to-red: linear-gradient(160deg, #EEEADD 0%, #E4D1D1 100%);--wp--preset--gradient--purple-to-red: linear-gradient(160deg, #D1D1E4 0%, #E4D1D1 100%);--wp--preset--gradient--red-to-purple: linear-gradient(160deg, #E4D1D1 0%, #D1D1E4 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 18px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 24px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-size--extra-small: 16px;--wp--preset--font-size--normal: 20px;--wp--preset--font-size--extra-large: 40px;--wp--preset--font-size--huge: 96px;--wp--preset--font-size--gigantic: 144px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 </style>
-
-
+<link rel='stylesheet' id='cb70d11b8-css'  href='https://mrpowercaps.com/wp-content/uploads/essential-addons-elementor/cb70d11b8.min.css?ver=1655325789' media='all' />
+<link rel='stylesheet' id='twenty-twenty-one-style-css'  href='https://mrpowercaps.com/wp-content/themes/twentytwentyone/style.css?ver=1.4' media='all' />
 <link rel='stylesheet' id='twenty-twenty-one-print-style-css'  href='https://mrpowercaps.com/wp-content/themes/twentytwentyone/assets/css/print.css?ver=1.4' media='print' />
-
+<link rel='stylesheet' id='elementor-icons-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=5.15.0' media='all' />
 <style id='elementor-icons-inline-css'>
 
 		.elementor-add-new-section .elementor-add-templately-promo-button{
@@ -63,26 +63,26 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
             bottom: 5px;
         }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js' defer></script>
+<link rel='stylesheet' id='elementor-frontend-legacy-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/css/frontend-legacy.min.css?ver=3.6.5' media='all' />
+<link rel='stylesheet' id='elementor-frontend-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/css/frontend.min.css?ver=3.6.5' media='all' />
+<link rel='stylesheet' id='elementor-post-149-css'  href='https://mrpowercaps.com/wp-content/uploads/elementor/css/post-149.css?ver=1653829835' media='all' />
+<link rel='stylesheet' id='elementor-pro-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor-pro/assets/css/frontend.min.css?ver=3.0.8' media='all' />
+<link rel='stylesheet' id='elementor-global-css'  href='https://mrpowercaps.com/wp-content/uploads/elementor/css/global.css?ver=1653859281' media='all' />
+<link rel='stylesheet' id='elementor-post-147-css'  href='https://mrpowercaps.com/wp-content/uploads/elementor/css/post-147.css?ver=1655122649' media='all' />
+<link rel='stylesheet' id='google-fonts-1-css'  href='https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=auto&#038;ver=6.0' media='all' />
+<link rel='stylesheet' id='elementor-icons-shared-0-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css?ver=5.15.3' media='all' />
+<link rel='stylesheet' id='elementor-icons-fa-solid-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css?ver=5.15.3' media='all' />
+<link rel='stylesheet' id='elementor-icons-fa-regular-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/regular.min.css?ver=5.15.3' media='all' />
+<link rel='stylesheet' id='elementor-icons-fa-brands-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/font-awesome/css/brands.min.css?ver=5.15.3' media='all' />
+<script src='https://mrpowercaps.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script src='https://mrpowercaps.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
 <link rel="https://api.w.org/" href="https://mrpowercaps.com/wp-json/" /><link rel="alternate" type="application/json" href="https://mrpowercaps.com/wp-json/wp/v2/pages/147" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://mrpowercaps.com/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://mrpowercaps.com/wp-includes/wlwmanifest.xml" /> 
 <link rel='shortlink' href='https://mrpowercaps.com/' />
 <link rel="alternate" type="application/json+oembed" href="https://mrpowercaps.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmrpowercaps.com%2F" />
 <link rel="alternate" type="text/xml+oembed" href="https://mrpowercaps.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmrpowercaps.com%2F&#038;format=xml" />
 <!-- HFCM by 99 Robots - Snippet # 1: Tiktok -->
-<script type="rocketlazyloadscript">
+<script>
 !function (w, d, t) {
   w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
 
@@ -92,7 +92,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 </script>
 <!-- /end HFCM by 99 Robots -->
 <!-- HFCM by 99 Robots - Snippet # 2: mrpower2 -->
-<script type="rocketlazyloadscript">
+<script>
 !function (w, d, t) {
   w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
 
@@ -103,17 +103,8 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 <!-- /end HFCM by 99 Robots -->
 <!-- HFCM by 99 Robots - Snippet # 3: Facebook ads -->
 <!-- Facebook Pixel Code -->
-<script type="rocketlazyloadscript">
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '457105349267983');
-fbq('track', 'PageView');
+<script>
+
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=457105349267983&ev=PageView&noscript=1"
@@ -121,7 +112,7 @@ src="https://www.facebook.com/tr?id=457105349267983&ev=PageView&noscript=1"
 <!-- End Facebook Pixel Code -->
 <!-- /end HFCM by 99 Robots -->
 <!-- HFCM by 99 Robots - Snippet # 4: Tiktok -->
-<script type="rocketlazyloadscript">
+<script>
 !function (w, d, t) {
   w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
 
@@ -132,17 +123,8 @@ src="https://www.facebook.com/tr?id=457105349267983&ev=PageView&noscript=1"
 <!-- /end HFCM by 99 Robots -->
 <!-- HFCM by 99 Robots - Snippet # 5: BM 2 pixel MR -->
 <!-- Meta Pixel Code -->
-<script type="rocketlazyloadscript">
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '572315517531894');
-fbq('track', 'PageView');
+<script>
+
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
@@ -153,7 +135,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 <link rel="icon" href="https://mrpowercaps.com/wp-content/uploads/2022/01/cropped-logo_fav-1-192x192.png" sizes="192x192" />
 <link rel="apple-touch-icon" href="https://mrpowercaps.com/wp-content/uploads/2022/01/cropped-logo_fav-1-180x180.png" />
 <meta name="msapplication-TileImage" content="https://mrpowercaps.com/wp-content/uploads/2022/01/cropped-logo_fav-1-270x270.png" />
-<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" /></head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" /></head>
 <body class="home page-template page-template-elementor_canvas page page-id-147 wp-embed-responsive is-light-theme no-js singular elementor-default elementor-template-canvas elementor-kit-149 elementor-page elementor-page-147">
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg>		<div data-elementor-type="wp-page" data-elementor-id="147" class="elementor elementor-147">
 						<div class="elementor-inner">
@@ -173,7 +155,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 							<div class="elementor-widget-wrap">
 						<div class="elementor-element elementor-element-6a7b9b1 elementor-widget elementor-widget-html" data-id="6a7b9b1" data-element_type="widget" data-widget_type="html.default">
 				<div class="elementor-widget-container">
-			<script type="rocketlazyloadscript">
+			<script>
 !function (w, d, t) {
   w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
 
@@ -185,7 +167,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-3cd20cd9 elementor-widget elementor-widget-image" data-id="3cd20cd9" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="LOGO-1.webp" alt="LOGO-1.webp" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp" title="LOGO-1.webp" alt="LOGO-1.webp" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/LOGO-1.webp" title="LOGO-1.webp" alt="LOGO-1.webp" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-6d5ba680 elementor-widget elementor-widget-heading" data-id="6d5ba680" data-element_type="widget" data-widget_type="heading.default">
@@ -201,7 +183,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-2e64726a elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="2e64726a" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="mockup_header.webp" alt="mockup_header.webp" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/mockup_header.webp" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/mockup_header.webp" title="mockup_header.webp" alt="mockup_header.webp" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/mockup_header.webp" title="mockup_header.webp" alt="mockup_header.webp" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-22b950ef elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-heading" data-id="22b950ef" data-element_type="widget" data-widget_type="heading.default">
@@ -269,7 +251,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-28ab5e9c elementor-hidden-phone elementor-widget elementor-widget-image" data-id="28ab5e9c" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="mockup_header.webp" alt="mockup_header.webp" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/mockup_header.webp" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/mockup_header.webp" title="mockup_header.webp" alt="mockup_header.webp" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/mockup_header.webp" title="mockup_header.webp" alt="mockup_header.webp" />														</div>
 						</div>
 				</div>
 						</div>
@@ -285,7 +267,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-3dee867d elementor-align-center elementor-widget elementor-widget-button" data-id="3dee867d" data-element_type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://ev.braip.com/ref?pl=plaoqepx&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.BOT.1" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+			<a href="https://ev.braip.com/ref?pl=plam4eqy&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.BOT.1" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text"> conheça o MR Power Caps</span>
 		</span>
@@ -400,7 +382,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-186c323d elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="186c323d" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="1920" height="1080" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201080'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1568x882.png 1568w" data-lazy-sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png" /><noscript><img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" /></noscript>														</div>
+												<img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-6fe76a8e elementor-align-left elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="6fe76a8e" data-element_type="widget" data-widget_type="icon-list.default">
@@ -443,7 +425,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-1a3ae916 elementor-hidden-phone elementor-widget elementor-widget-image" data-id="1a3ae916" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="1920" height="1080" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201080'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1568x882.png 1568w" data-lazy-sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png" /><noscript><img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" /></noscript>														</div>
+												<img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/homen-malhando-plano-de-fundo-2-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -471,13 +453,13 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-59faa4fb elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="59faa4fb" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="garantia-MR-PowerCaps-1.png" alt="garantia-MR-PowerCaps-1.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/garantia-MR-PowerCaps-1-1.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/garantia-MR-PowerCaps-1-1.png" title="garantia-MR-PowerCaps-1.png" alt="garantia-MR-PowerCaps-1.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/garantia-MR-PowerCaps-1-1.png" title="garantia-MR-PowerCaps-1.png" alt="garantia-MR-PowerCaps-1.png" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-58a2d8f9 elementor-widget elementor-widget-image" data-id="58a2d8f9" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="anvisaicon.png" alt="anvisaicon.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/anvisaicon-pinyqkck91qrunyf5hiseg22hltsbk5aa8uw23738g.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/anvisaicon-pinyqkck91qrunyf5hiseg22hltsbk5aa8uw23738g.png" title="anvisaicon.png" alt="anvisaicon.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/anvisaicon-pinyqkck91qrunyf5hiseg22hltsbk5aa8uw23738g.png" title="anvisaicon.png" alt="anvisaicon.png" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-1337868c elementor-widget elementor-widget-text-editor" data-id="1337868c" data-element_type="widget" data-widget_type="text-editor.default">
@@ -489,7 +471,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-9ae68e7 elementor-align-center elementor-widget elementor-widget-button" data-id="9ae68e7" data-element_type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://ev.braip.com/ref?pl=plaoqepx&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.BOT.2" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+			<a href="https://ev.braip.com/ref?pl=plam4eqy&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.BOT.2" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text"> COMPRAR MR Power Caps COM 30 DIAS DE GARANTIA!!</span>
 		</span>
@@ -506,7 +488,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-42c03c5f elementor-hidden-phone elementor-widget elementor-widget-image" data-id="42c03c5f" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="garantia-MR-PowerCaps-1.png" alt="garantia-MR-PowerCaps-1.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/garantia-MR-PowerCaps-1-1.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/garantia-MR-PowerCaps-1-1.png" title="garantia-MR-PowerCaps-1.png" alt="garantia-MR-PowerCaps-1.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/garantia-MR-PowerCaps-1-1.png" title="garantia-MR-PowerCaps-1.png" alt="garantia-MR-PowerCaps-1.png" />														</div>
 						</div>
 				</div>
 						</div>
@@ -524,7 +506,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-2193b7fa elementor-hidden-phone elementor-widget elementor-widget-image" data-id="2193b7fa" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="1920" height="1080" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201080'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1568x882.png 1568w" data-lazy-sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png" /><noscript><img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" /></noscript>														</div>
+												<img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -541,7 +523,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-2fa309 elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="2fa309" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="1920" height="1080" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201920%201080'%3E%3C/svg%3E" class="attachment-full size-full" alt="" data-lazy-srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1568x882.png 1568w" data-lazy-sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png" /><noscript><img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" /></noscript>														</div>
+												<img width="1920" height="1080" src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png" class="attachment-full size-full" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1.png 1920w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-300x169.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1024x576.png 1024w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-768x432.png 768w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1536x864.png 1536w, https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-3-1-1568x882.png 1568w" sizes="(max-width: 1920px) 100vw, 1920px" style="width:100%;height:56.25%;max-width:1920px" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-455d51fd elementor-widget elementor-widget-heading" data-id="455d51fd" data-element_type="widget" data-widget_type="heading.default">
@@ -574,7 +556,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-203ed38a elementor-hidden-desktop elementor-hidden-tablet elementor-widget elementor-widget-image" data-id="203ed38a" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="Sem-Titulo-2-Recuperado-Copia.png" alt="Sem-Titulo-2-Recuperado-Copia.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-2-Recuperado-Copia.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-2-Recuperado-Copia.png" title="Sem-Titulo-2-Recuperado-Copia.png" alt="Sem-Titulo-2-Recuperado-Copia.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-2-Recuperado-Copia.png" title="Sem-Titulo-2-Recuperado-Copia.png" alt="Sem-Titulo-2-Recuperado-Copia.png" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-36a7f4a0 elementor-widget elementor-widget-heading" data-id="36a7f4a0" data-element_type="widget" data-widget_type="heading.default">
@@ -590,7 +572,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-583e10d elementor-align-center elementor-widget elementor-widget-button" data-id="583e10d" data-element_type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://ev.braip.com/ref?pl=plaoqepx&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.BOT.3" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+			<a href="https://ev.braip.com/ref?pl=plam4eqy&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.BOT.3" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text">Adquira com segurança!</span>
 		</span>
@@ -607,7 +589,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-120b9ad0 elementor-hidden-phone elementor-widget elementor-widget-image" data-id="120b9ad0" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="Sem-Titulo-2-Recuperado-Copia.png" alt="Sem-Titulo-2-Recuperado-Copia.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-2-Recuperado-Copia.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-2-Recuperado-Copia.png" title="Sem-Titulo-2-Recuperado-Copia.png" alt="Sem-Titulo-2-Recuperado-Copia.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/Sem-Titulo-2-Recuperado-Copia.png" title="Sem-Titulo-2-Recuperado-Copia.png" alt="Sem-Titulo-2-Recuperado-Copia.png" />														</div>
 						</div>
 				</div>
 						</div>
@@ -642,7 +624,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-widget-container">
 					<div class="elementor-image-carousel-wrapper swiper-container" dir="ltr">
 			<div class="elementor-image-carousel swiper-wrapper">
-								<div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Antonio-52-anos-34-dias-de-tratamento..png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/03/Antonio-52-anos-34-dias-de-tratamento.-768x768.png" /><noscript><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Antonio-52-anos-34-dias-de-tratamento.-768x768.png" alt="Antonio-52-anos-34-dias-de-tratamento..png" /></noscript></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Cleiton-37-anos-45-dias-de-Tratamento..png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/03/Cleiton-37-anos-45-dias-de-Tratamento.-768x768.png" /><noscript><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Cleiton-37-anos-45-dias-de-Tratamento.-768x768.png" alt="Cleiton-37-anos-45-dias-de-Tratamento..png" /></noscript></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Cristiano-32-anos-27-dias-de-tratamento..png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/03/Cristiano-32-anos-27-dias-de-tratamento.-768x768.png" /><noscript><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Cristiano-32-anos-27-dias-de-tratamento.-768x768.png" alt="Cristiano-32-anos-27-dias-de-tratamento..png" /></noscript></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Gustavo-23-anos-2-meses-de-tratamento..png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/03/Gustavo-23-anos-2-meses-de-tratamento.-1-768x768.png" /><noscript><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Gustavo-23-anos-2-meses-de-tratamento.-1-768x768.png" alt="Gustavo-23-anos-2-meses-de-tratamento..png" /></noscript></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Jonilson-30-anos-2-meses-de-tratamento..png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/03/Jonilson-30-anos-2-meses-de-tratamento.-768x768.png" /><noscript><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Jonilson-30-anos-2-meses-de-tratamento.-768x768.png" alt="Jonilson-30-anos-2-meses-de-tratamento..png" /></noscript></figure></div>			</div>
+								<div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Antonio-52-anos-34-dias-de-tratamento.-768x768.png" alt="Antonio-52-anos-34-dias-de-tratamento..png" /></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Cleiton-37-anos-45-dias-de-Tratamento.-768x768.png" alt="Cleiton-37-anos-45-dias-de-Tratamento..png" /></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Cristiano-32-anos-27-dias-de-tratamento.-768x768.png" alt="Cristiano-32-anos-27-dias-de-tratamento..png" /></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Gustavo-23-anos-2-meses-de-tratamento.-1-768x768.png" alt="Gustavo-23-anos-2-meses-de-tratamento..png" /></figure></div><div class="swiper-slide"><figure class="swiper-slide-inner"><img class="swiper-slide-image" src="https://mrpowercaps.com/wp-content/uploads/2022/03/Jonilson-30-anos-2-meses-de-tratamento.-768x768.png" alt="Jonilson-30-anos-2-meses-de-tratamento..png" /></figure></div>			</div>
 												<div class="swiper-pagination"></div>
 													<div class="elementor-swiper-button elementor-swiper-button-prev">
 						<i aria-hidden="true" class="eicon-chevron-left"></i>						<span class="elementor-screen-only">Anterior</span>
@@ -1327,12 +1309,12 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-1ac9974 elementor-widget elementor-widget-image" data-id="1ac9974" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="750" height="225" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20750%20225'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard.png 910w, https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard-300x90.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard-768x230.png 768w" data-lazy-sizes="(max-width: 750px) 100vw, 750px" style="width:100%;height:30%;max-width:910px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard.png" /><noscript><img width="750" height="225" src="https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard.png" class="attachment-large size-large" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard.png 910w, https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard-300x90.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard-768x230.png 768w" sizes="(max-width: 750px) 100vw, 750px" style="width:100%;height:30%;max-width:910px" /></noscript>														</div>
+												<img width="750" height="225" src="https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard.png" class="attachment-large size-large" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard.png 910w, https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard-300x90.png 300w, https://mrpowercaps.com/wp-content/uploads/2022/05/Design-sem-nome-2022-05-20T034138-fococlipping-standard-768x230.png 768w" sizes="(max-width: 750px) 100vw, 750px" style="width:100%;height:30%;max-width:910px" />														</div>
 						</div>
 				</div>
 				<div class="elementor-element elementor-element-7bf8599c elementor-widget elementor-widget-heading" data-id="7bf8599c" data-element_type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-			<h2 class="elementor-heading-title elementor-size-default">PROMOÇÃO DE QUEIMA DE ESTOQUE, TODOS OS KITS COM ATÉ 50% DE DESCONTO MAIS 1 POTE GRÁTIS</h2>		</div>
+			<h2 class="elementor-heading-title elementor-size-default">escolha seu KIT COM ATÉ 50% DE DESCONTO </h2>		</div>
 				</div>
 				<div class="elementor-element elementor-element-f7bac7f elementor-widget elementor-widget-text-editor" data-id="f7bac7f" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
@@ -1357,74 +1339,30 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 								</div>
 					</div>
 		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-88b5827 elementor-hidden-desktop elementor-hidden-tablet elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="88b5827" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;gradient&quot;}">
+				<section class="elementor-section elementor-inner-section elementor-element elementor-element-59603f1b elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="59603f1b" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;gradient&quot;}">
 						<div class="elementor-container elementor-column-gap-default">
 							<div class="elementor-row">
-					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1e9422d9" data-id="1e9422d9" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-6ef5e1d1" data-id="6ef5e1d1" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-column-wrap elementor-element-populated">
 					<div class="elementor-background-overlay"></div>
 							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-2411829 elementor-widget elementor-widget-image" data-id="2411829" data-element_type="widget" data-widget_type="image.default">
+						<div class="elementor-element elementor-element-6a248571 elementor-widget elementor-widget-heading" data-id="6a248571" data-element_type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-								<div class="elementor-image">
-													<a href="https://ev.braip.com/ref?pl=plaoqepx&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam">
-							<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="3-fococlipping-standard (1)" alt="3-fococlipping-standard (1)" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/3-fococlipping-standard-1-ppehzi4gtxft94s5kf8q9x5jnjq12a11t1un6zryds.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/3-fococlipping-standard-1-ppehzi4gtxft94s5kf8q9x5jnjq12a11t1un6zryds.png" title="3-fococlipping-standard (1)" alt="3-fococlipping-standard (1)" /></noscript>								</a>
-														</div>
-						</div>
+			<h2 class="elementor-heading-title elementor-size-default">1 POTE</h2>		</div>
 				</div>
-						</div>
-					</div>
-		</div>
-				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-6f777dfe" data-id="6f777dfe" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-			<div class="elementor-column-wrap elementor-element-populated">
-					<div class="elementor-background-overlay"></div>
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-7050ffe elementor-widget elementor-widget-image" data-id="7050ffe" data-element_type="widget" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-								<div class="elementor-image">
-													<a href="https://ev.braip.com/ref?pl=plaxel4g&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam">
-							<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="2-fococlipping-standard (1)" alt="2-fococlipping-standard (1)" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/2-fococlipping-standard-1-1-ppei9rj1fthhzvvkncx3ztxp3z5a3brk7u8gsqk8gg.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/2-fococlipping-standard-1-1-ppei9rj1fthhzvvkncx3ztxp3z5a3brk7u8gsqk8gg.png" title="2-fococlipping-standard (1)" alt="2-fococlipping-standard (1)" /></noscript>								</a>
-														</div>
-						</div>
-				</div>
-						</div>
-					</div>
-		</div>
-				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-1821098" data-id="1821098" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-			<div class="elementor-column-wrap elementor-element-populated">
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-f065815 elementor-widget elementor-widget-image" data-id="f065815" data-element_type="widget" data-widget_type="image.default">
-				<div class="elementor-widget-container">
-								<div class="elementor-image">
-													<a href="https://ev.braip.com/ref?pl=plalv61k&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam">
-							<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="1-fococlipping-standard" alt="1-fococlipping-standard" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/1-fococlipping-standard-1-ppei0s6k4t6v20x93h5g63j4rff0jg3wbdtfpjvnww.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/elementor/thumbs/1-fococlipping-standard-1-ppei0s6k4t6v20x93h5g63j4rff0jg3wbdtfpjvnww.png" title="1-fococlipping-standard" alt="1-fococlipping-standard" /></noscript>								</a>
-														</div>
-						</div>
-				</div>
-						</div>
-					</div>
-		</div>
-								</div>
-					</div>
-		</section>
-				<section class="elementor-section elementor-inner-section elementor-element elementor-element-73b74b51 elementor-hidden-mobile elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="73b74b51" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;gradient&quot;}">
-						<div class="elementor-container elementor-column-gap-default">
-							<div class="elementor-row">
-					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-663d2e78" data-id="663d2e78" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
-			<div class="elementor-column-wrap elementor-element-populated">
-					<div class="elementor-background-overlay"></div>
-							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-d790e09 elementor-widget elementor-widget-heading" data-id="d790e09" data-element_type="widget" data-widget_type="heading.default">
-				<div class="elementor-widget-container">
-			<h2 class="elementor-heading-title elementor-size-default">pague 1 e leve 2</h2>		</div>
-				</div>
-				<div class="elementor-element elementor-element-3db44caa elementor-widget elementor-widget-text-editor" data-id="3db44caa" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-4447a9e4 elementor-widget elementor-widget-text-editor" data-id="4447a9e4" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
-				<p>(240 CÁPSULAS &#8211; 2 MÊS)</p>					</div>
+				<p>(120 CÁPSULAS &#8211; 1 MÊS)</p>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-7d5566e3 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="7d5566e3" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-2943b08b elementor-widget elementor-widget-text-editor" data-id="2943b08b" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+								<div class="elementor-text-editor elementor-clearfix">
+				10% DE DESCONTO					</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-1e64eadc elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="1e64eadc" data-element_type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1432,13 +1370,13 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-12a6950 elementor-widget elementor-widget-image" data-id="12a6950" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-45bc4d31 elementor-widget elementor-widget-image" data-id="45bc4d31" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="328" height="237" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20328%20237'%3E%3C/svg%3E" class="attachment-large size-large" alt="" data-lazy-srcset="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-195643.png 328w, https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-195643-300x217.png 300w" data-lazy-sizes="(max-width: 328px) 100vw, 328px" style="width:100%;height:72.26%;max-width:328px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-195643.png" /><noscript><img width="328" height="237" src="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-195643.png" class="attachment-large size-large" alt="" srcset="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-195643.png 328w, https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-195643-300x217.png 300w" sizes="(max-width: 328px) 100vw, 328px" style="width:100%;height:72.26%;max-width:328px" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/03/Mockup-6.png" title="Mockup-6.png" alt="Mockup-6.png" />														</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-493c7af elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="493c7af" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-62265377 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="62265377" data-element_type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1446,34 +1384,34 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-6966d907 elementor-widget elementor-widget-text-editor" data-id="6966d907" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-5afce977 elementor-widget elementor-widget-text-editor" data-id="5afce977" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				De <s>R$ 218,90</s>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-61fe312b elementor-widget elementor-widget-text-editor" data-id="61fe312b" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-51db35e9 elementor-widget elementor-widget-text-editor" data-id="51db35e9" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				por <b>R$ 197,00</b>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-7b464411 elementor-widget elementor-widget-text-editor" data-id="7b464411" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-6fdc3b02 elementor-widget elementor-widget-text-editor" data-id="6fdc3b02" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				ou em até 12x de					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-726e902e elementor-widget elementor-widget-text-editor" data-id="726e902e" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-19ad8592 elementor-widget elementor-widget-text-editor" data-id="19ad8592" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				R$ 19,70					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-264bc2ad elementor-align-center powerPerformance_goldenButton elementor-invisible elementor-widget elementor-widget-button" data-id="264bc2ad" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;}" data-widget_type="button.default">
+				<div class="elementor-element elementor-element-4fa59285 elementor-align-center powerPerformance_goldenButton elementor-invisible elementor-widget elementor-widget-button" data-id="4fa59285" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;}" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://ev.braip.com/ref?pl=plaoqepx&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+			<a href="https://ev.braip.com/ref?pl=plam4eqy&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text">COMPRAR AGORA</span>
 		</span>
@@ -1481,35 +1419,41 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-e3c8405 elementor-widget elementor-widget-image" data-id="e3c8405" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-2da5757 elementor-widget elementor-widget-image" data-id="2da5757" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="frete_gratis_black.webp" alt="frete_gratis_black.webp" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/02/frete_gratis_black.webp" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/02/frete_gratis_black.webp" title="frete_gratis_black.webp" alt="frete_gratis_black.webp" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/02/frete_gratis_black.webp" title="frete_gratis_black.webp" alt="frete_gratis_black.webp" />														</div>
 						</div>
 				</div>
 						</div>
 					</div>
 		</div>
-				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5f4999be" data-id="5f4999be" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-66571b18" data-id="66571b18" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-column-wrap elementor-element-populated">
 							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-7474f720 elementor-widget elementor-widget-text-editor" data-id="7474f720" data-element_type="widget" data-widget_type="text-editor.default">
+						<div class="elementor-element elementor-element-1a99e51c elementor-widget elementor-widget-text-editor" data-id="1a99e51c" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				<p>MAIS VENDIDO!</p>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-5bf6f6ed elementor-widget elementor-widget-heading" data-id="5bf6f6ed" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-element elementor-element-3799424e elementor-widget elementor-widget-heading" data-id="3799424e" data-element_type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-			<h2 class="elementor-heading-title elementor-size-default">pague 3 e leve 4</h2>		</div>
+			<h2 class="elementor-heading-title elementor-size-default">3 POTES</h2>		</div>
 				</div>
-				<div class="elementor-element elementor-element-752da5e3 elementor-widget elementor-widget-text-editor" data-id="752da5e3" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-5289d8cf elementor-widget elementor-widget-text-editor" data-id="5289d8cf" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
-				<p>(480 CÁPSULAS &#8211; 4 MESES)</p>					</div>
+				(360 CÁPSULAS &#8211; 3 MESES)					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-4f6c5e10 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="4f6c5e10" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-5d279f1d elementor-widget elementor-widget-text-editor" data-id="5d279f1d" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+								<div class="elementor-text-editor elementor-clearfix">
+				25% DE DESCONTO					</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-95b1294 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="95b1294" data-element_type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1517,13 +1461,13 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-4b9be8e1 elementor-widget elementor-widget-image" data-id="4b9be8e1" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-135602fc elementor-widget elementor-widget-image" data-id="135602fc" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="fococlipping-20220213-20245.png" alt="fococlipping-20220213-20245.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-20245.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-20245.png" title="fococlipping-20220213-20245.png" alt="fococlipping-20220213-20245.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/03/Combo-3-potes-2.png" title="Combo-3-potes-2.png" alt="Combo-3-potes-2.png" />														</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-50bfcb5 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="50bfcb5" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-1ae3d409 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="1ae3d409" data-element_type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1531,34 +1475,34 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-504e0d36 elementor-widget elementor-widget-text-editor" data-id="504e0d36" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-43f5b99c elementor-widget elementor-widget-text-editor" data-id="43f5b99c" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				De <s>R$ 398,90</s>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-2deab65a elementor-widget elementor-widget-text-editor" data-id="2deab65a" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-7f340fc3 elementor-widget elementor-widget-text-editor" data-id="7f340fc3" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				por R$ 297,00</b>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-3c8fa78e elementor-widget elementor-widget-text-editor" data-id="3c8fa78e" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-3ba57015 elementor-widget elementor-widget-text-editor" data-id="3ba57015" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				ou em até 12x de					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-2616dde5 elementor-widget elementor-widget-text-editor" data-id="2616dde5" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-767a397e elementor-widget elementor-widget-text-editor" data-id="767a397e" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				<p>R$ 29,70</p>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-1c83b7e8 elementor-align-center powerPerformance_goldenButton elementor-invisible elementor-widget elementor-widget-button" data-id="1c83b7e8" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;}" data-widget_type="button.default">
+				<div class="elementor-element elementor-element-6b290b97 elementor-align-center powerPerformance_goldenButton elementor-invisible elementor-widget elementor-widget-button" data-id="6b290b97" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;}" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://ev.braip.com/ref?pl=plaxel4g&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+			<a href="https://ev.braip.com/ref?pl=pla9xpd0&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text">COMPRE AGORA!</span>
 		</span>
@@ -1566,29 +1510,35 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-453097db elementor-widget elementor-widget-image" data-id="453097db" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-5cc75070 elementor-widget elementor-widget-image" data-id="5cc75070" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="Frete-Cinza-1-2.png" alt="Frete-Cinza-1-2.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/02/Frete-Cinza-1-2.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/02/Frete-Cinza-1-2.png" title="Frete-Cinza-1-2.png" alt="Frete-Cinza-1-2.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/02/Frete-Cinza-1-2.png" title="Frete-Cinza-1-2.png" alt="Frete-Cinza-1-2.png" />														</div>
 						</div>
 				</div>
 						</div>
 					</div>
 		</div>
-				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-37ee2399" data-id="37ee2399" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-48c57baf" data-id="48c57baf" data-element_type="column" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 			<div class="elementor-column-wrap elementor-element-populated">
 							<div class="elementor-widget-wrap">
-						<div class="elementor-element elementor-element-8356630 elementor-widget elementor-widget-heading" data-id="8356630" data-element_type="widget" data-widget_type="heading.default">
+						<div class="elementor-element elementor-element-1eef70e9 elementor-widget elementor-widget-heading" data-id="1eef70e9" data-element_type="widget" data-widget_type="heading.default">
 				<div class="elementor-widget-container">
-			<h2 class="elementor-heading-title elementor-size-default">pague 5 e leve 6</h2>		</div>
+			<h2 class="elementor-heading-title elementor-size-default">5 POTES</h2>		</div>
 				</div>
-				<div class="elementor-element elementor-element-7919967a elementor-widget elementor-widget-text-editor" data-id="7919967a" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-67f83aa7 elementor-widget elementor-widget-text-editor" data-id="67f83aa7" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
-				<p>(720 CÁPSULAS &#8211; 6 MESES)</p>					</div>
+				(600 CÁPSULAS &#8211; 5 MESES)					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-214beee5 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="214beee5" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-270982f2 elementor-widget elementor-widget-text-editor" data-id="270982f2" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+								<div class="elementor-text-editor elementor-clearfix">
+				<p>50% DE DESCONTO</p>					</div>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-188065c4 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="188065c4" data-element_type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1596,13 +1546,13 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-751f30f9 elementor-widget elementor-widget-image" data-id="751f30f9" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-4e14ffdd elementor-widget elementor-widget-image" data-id="4e14ffdd" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="fococlipping-20220213-201052.png" alt="fococlipping-20220213-201052.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-201052.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/02/fococlipping-20220213-201052.png" title="fococlipping-20220213-201052.png" alt="fococlipping-20220213-201052.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/03/Combo-4-potes-1.png" title="Combo-4-potes-1.png" alt="Combo-4-potes-1.png" />														</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-3fe95a8b elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="3fe95a8b" data-element_type="widget" data-widget_type="divider.default">
+				<div class="elementor-element elementor-element-1945ab18 elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="1945ab18" data-element_type="widget" data-widget_type="divider.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-divider">
 			<span class="elementor-divider-separator">
@@ -1610,34 +1560,34 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-372ed3f2 elementor-widget elementor-widget-text-editor" data-id="372ed3f2" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-142e9c67 elementor-widget elementor-widget-text-editor" data-id="142e9c67" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				De <s>R$ 758,90</s>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-58e036a6 elementor-widget elementor-widget-text-editor" data-id="58e036a6" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-638256c2 elementor-widget elementor-widget-text-editor" data-id="638256c2" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				por <b>R$ 397,00</b>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-71b3f35d elementor-widget elementor-widget-text-editor" data-id="71b3f35d" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-13cef2e elementor-widget elementor-widget-text-editor" data-id="13cef2e" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				ou em até 12x de					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-45e12dd4 elementor-widget elementor-widget-text-editor" data-id="45e12dd4" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-element elementor-element-22c75ff elementor-widget elementor-widget-text-editor" data-id="22c75ff" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-text-editor elementor-clearfix">
 				<p>R$ 39,70</p>					</div>
 						</div>
 				</div>
-				<div class="elementor-element elementor-element-4959aeff elementor-align-center powerPerformance_goldenButton elementor-invisible elementor-widget elementor-widget-button" data-id="4959aeff" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;}" data-widget_type="button.default">
+				<div class="elementor-element elementor-element-1502002a elementor-align-center powerPerformance_goldenButton elementor-invisible elementor-widget elementor-widget-button" data-id="1502002a" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;}" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 					<div class="elementor-button-wrapper">
-			<a href="https://ev.braip.com/ref?pl=plalv61k&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
+			<a href="https://ev.braip.com/ref?pl=pla8201r&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam" class="elementor-button-link elementor-button elementor-size-sm elementor-animation-shrink" role="button">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-text">COMPRE AGORA!</span>
 		</span>
@@ -1645,10 +1595,10 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 		</div>
 				</div>
 				</div>
-				<div class="elementor-element elementor-element-815441c elementor-widget elementor-widget-image" data-id="815441c" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-element elementor-element-67faeccd elementor-widget elementor-widget-image" data-id="67faeccd" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="frete_gratis_black.webp" alt="frete_gratis_black.webp" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/02/frete_gratis_black.webp" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/02/frete_gratis_black.webp" title="frete_gratis_black.webp" alt="frete_gratis_black.webp" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/02/frete_gratis_black.webp" title="frete_gratis_black.webp" alt="frete_gratis_black.webp" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1695,7 +1645,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-304c8735 elementor-widget elementor-widget-image" data-id="304c8735" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="phoneWhatsapp.webp" alt="phoneWhatsapp.webp" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/phoneWhatsapp.webp" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/phoneWhatsapp.webp" title="phoneWhatsapp.webp" alt="phoneWhatsapp.webp" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/phoneWhatsapp.webp" title="phoneWhatsapp.webp" alt="phoneWhatsapp.webp" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1824,7 +1774,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-7e8b158f elementor-widget elementor-widget-image" data-id="7e8b158f" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" title="logo-pix-icone-1024.png" alt="logo-pix-icone-1024.png" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/logo-pix-icone-1024.png" /><noscript><img src="https://mrpowercaps.com/wp-content/uploads/2022/01/logo-pix-icone-1024.png" title="logo-pix-icone-1024.png" alt="logo-pix-icone-1024.png" /></noscript>														</div>
+												<img src="https://mrpowercaps.com/wp-content/uploads/2022/01/logo-pix-icone-1024.png" title="logo-pix-icone-1024.png" alt="logo-pix-icone-1024.png" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1836,7 +1786,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-75ca9844 elementor-widget elementor-widget-image" data-id="75ca9844" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="60" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:55%;max-width:60px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/visa.png" /><noscript><img width="60" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/visa.png" class="attachment-full size-full" alt="" style="width:100%;height:55%;max-width:60px" /></noscript>														</div>
+												<img width="60" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/visa.png" class="attachment-full size-full" alt="" style="width:100%;height:55%;max-width:60px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1848,7 +1798,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-5df55471 elementor-widget elementor-widget-image" data-id="5df55471" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="56" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2056%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:58.93%;max-width:56px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/master.png" /><noscript><img width="56" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/master.png" class="attachment-full size-full" alt="" style="width:100%;height:58.93%;max-width:56px" /></noscript>														</div>
+												<img width="56" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/master.png" class="attachment-full size-full" alt="" style="width:100%;height:58.93%;max-width:56px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1860,7 +1810,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-7605cd4c elementor-widget elementor-widget-image" data-id="7605cd4c" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="43" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2043%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:76.74%;max-width:43px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/diners.png" /><noscript><img width="43" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/diners.png" class="attachment-full size-full" alt="" style="width:100%;height:76.74%;max-width:43px" /></noscript>														</div>
+												<img width="43" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/diners.png" class="attachment-full size-full" alt="" style="width:100%;height:76.74%;max-width:43px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1872,7 +1822,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-2fd9ae0 elementor-widget elementor-widget-image" data-id="2fd9ae0" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="60" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:55%;max-width:60px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/hiper.png" /><noscript><img width="60" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/hiper.png" class="attachment-full size-full" alt="" style="width:100%;height:55%;max-width:60px" /></noscript>														</div>
+												<img width="60" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/hiper.png" class="attachment-full size-full" alt="" style="width:100%;height:55%;max-width:60px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1884,7 +1834,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-2eeb65e7 elementor-widget elementor-widget-image" data-id="2eeb65e7" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="52" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2052%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:63.46%;max-width:52px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/elo.png" /><noscript><img width="52" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/elo.png" class="attachment-full size-full" alt="" style="width:100%;height:63.46%;max-width:52px" /></noscript>														</div>
+												<img width="52" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/elo.png" class="attachment-full size-full" alt="" style="width:100%;height:63.46%;max-width:52px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1896,7 +1846,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-79f202ac elementor-widget elementor-widget-image" data-id="79f202ac" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="48" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:68.75%;max-width:48px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/aura.png" /><noscript><img width="48" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/aura.png" class="attachment-full size-full" alt="" style="width:100%;height:68.75%;max-width:48px" /></noscript>														</div>
+												<img width="48" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/aura.png" class="attachment-full size-full" alt="" style="width:100%;height:68.75%;max-width:48px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1908,7 +1858,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-7d382a1 elementor-widget elementor-widget-image" data-id="7d382a1" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="59" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2059%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:55.93%;max-width:59px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/american.png" /><noscript><img width="59" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/american.png" class="attachment-full size-full" alt="" style="width:100%;height:55.93%;max-width:59px" /></noscript>														</div>
+												<img width="59" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/american.png" class="attachment-full size-full" alt="" style="width:100%;height:55.93%;max-width:59px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1920,7 +1870,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 						<div class="elementor-element elementor-element-5e99ea01 elementor-widget elementor-widget-image" data-id="5e99ea01" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="43" height="33" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2043%2033'%3E%3C/svg%3E" class="attachment-full size-full" alt="" style="width:100%;height:76.74%;max-width:43px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/pag-boleto.png" /><noscript><img width="43" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/pag-boleto.png" class="attachment-full size-full" alt="" style="width:100%;height:76.74%;max-width:43px" /></noscript>														</div>
+												<img width="43" height="33" src="https://mrpowercaps.com/wp-content/uploads/2022/01/pag-boleto.png" class="attachment-full size-full" alt="" style="width:100%;height:76.74%;max-width:43px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1976,7 +1926,7 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 				<div class="elementor-element elementor-element-4813ff63 elementor-widget elementor-widget-image" data-id="4813ff63" data-element_type="widget" data-widget_type="image.default">
 				<div class="elementor-widget-container">
 								<div class="elementor-image">
-												<img width="220" height="46" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20220%2046'%3E%3C/svg%3E" class="attachment-large size-large" alt="" style="width:100%;height:20.91%;max-width:220px" data-lazy-src="https://mrpowercaps.com/wp-content/uploads/2022/01/icons-siteseguro-1.png" /><noscript><img width="220" height="46" src="https://mrpowercaps.com/wp-content/uploads/2022/01/icons-siteseguro-1.png" class="attachment-large size-large" alt="" style="width:100%;height:20.91%;max-width:220px" /></noscript>														</div>
+												<img width="220" height="46" src="https://mrpowercaps.com/wp-content/uploads/2022/01/icons-siteseguro-1.png" class="attachment-large size-large" alt="" style="width:100%;height:20.91%;max-width:220px" />														</div>
 						</div>
 				</div>
 						</div>
@@ -1994,57 +1944,52 @@ src="https://www.facebook.com/tr?id=572315517531894&ev=PageView&noscript=1"
 									</div>
 			</div>
 					</div>
-		<script>document.body.classList.remove("no-js");</script>	<script type="rocketlazyloadscript">
+		<script>document.body.classList.remove("no-js");</script>	<script>
 	if ( -1 !== navigator.userAgent.indexOf( 'MSIE' ) || -1 !== navigator.appVersion.indexOf( 'Trident/' ) ) {
 		document.body.classList.add( 'is-IE' );
 	}
 	</script>
-	
+	<link rel='stylesheet' id='e-animations-css'  href='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/animations/animations.min.css?ver=3.6.5' media='all' />
 <script id='cb70d11b8-js-extra'>
-var localize = {"ajaxurl":"https:\/\/mrpowercaps.com\/wp-admin\/admin-ajax.php","nonce":"dfa8f06319","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"page_permalink":"https:\/\/mrpowercaps.com\/","cart_redirectition":"","cart_page_url":""};
+var localize = {"ajaxurl":"https:\/\/mrpowercaps.com\/wp-admin\/admin-ajax.php","nonce":"1f03561aa4","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"page_permalink":"https:\/\/mrpowercaps.com\/","cart_redirectition":"","cart_page_url":""};
 </script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/uploads/essential-addons-elementor/cb70d11b8.min.js?ver=1654338750' id='cb70d11b8-js' defer></script>
-<script type="rocketlazyloadscript" id='rocket-browser-checker-js-after'>
+<script src='https://mrpowercaps.com/wp-content/uploads/essential-addons-elementor/cb70d11b8.min.js?ver=1655325789' id='cb70d11b8-js'></script>
+<script id='rocket-browser-checker-js-after'>
 "use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
 </script>
 <script id='rocket-preload-links-js-extra'>
 var RocketPreloadLinksConfig = {"excludeUris":"\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/mrpowercaps.com","onHoverDelay":"100","rateThrottle":"3"};
 </script>
-<script type="rocketlazyloadscript" id='rocket-preload-links-js-after'>
+<script id='rocket-preload-links-js-after'>
 (function() {
 "use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
 }());
 </script>
-<script type="rocketlazyloadscript" id='twenty-twenty-one-ie11-polyfills-js-after'>
-( Element.prototype.matches && Element.prototype.closest && window.NodeList && NodeList.prototype.forEach ) || document.write( '<script data-minify="1" src="https://mrpowercaps.com/wp-content/cache/min/1/wp-content/themes/twentytwentyone/assets/js/polyfills.js?ver=1653859285" defer></scr' + 'ipt>' );
+<script id='twenty-twenty-one-ie11-polyfills-js-after'>
+( Element.prototype.matches && Element.prototype.closest && window.NodeList && NodeList.prototype.forEach ) || document.write( '<script src="https://mrpowercaps.com/wp-content/themes/twentytwentyone/assets/js/polyfills.js?ver=1.4"></scr' + 'ipt>' );
 </script>
-<script type="rocketlazyloadscript" data-minify="1" src='https://mrpowercaps.com/wp-content/cache/min/1/wp-content/themes/twentytwentyone/assets/js/responsive-embeds.js?ver=1653859285' id='twenty-twenty-one-responsive-embeds-script-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.6.5' id='elementor-webpack-runtime-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.6.5' id='elementor-frontend-modules-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.0.8' id='elementor-sticky-js' defer></script>
-<script type="rocketlazyloadscript" id='elementor-pro-frontend-js-before'>
-var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/mrpowercaps.com\/wp-admin\/admin-ajax.php","nonce":"47c075b93c","i18n":{"toc_no_headings_found":"No headings were found on this page."},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"google":{"title":"Google+","has_counter":true},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"pt_PT","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/mrpowercaps.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+<script src='https://mrpowercaps.com/wp-content/themes/twentytwentyone/assets/js/responsive-embeds.js?ver=1.4' id='twenty-twenty-one-responsive-embeds-script-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.6.5' id='elementor-webpack-runtime-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.6.5' id='elementor-frontend-modules-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.0.8' id='elementor-sticky-js'></script>
+<script id='elementor-pro-frontend-js-before'>
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/mrpowercaps.com\/wp-admin\/admin-ajax.php","nonce":"3ec2d01044","i18n":{"toc_no_headings_found":"No headings were found on this page."},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"google":{"title":"Google+","has_counter":true},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"pt_PT","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/mrpowercaps.com\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
 </script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.0.8' id='elementor-pro-frontend-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2' id='elementor-waypoints-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.1' id='jquery-ui-core-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/swiper/swiper.min.js?ver=5.3.6' id='swiper-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/share-link/share-link.min.js?ver=3.6.5' id='share-link-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js?ver=4.9.0' id='elementor-dialog-js' defer></script>
-<script type="rocketlazyloadscript" id='elementor-frontend-js-before'>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.0.8' id='elementor-pro-frontend-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2' id='elementor-waypoints-js'></script>
+<script src='https://mrpowercaps.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.1' id='jquery-ui-core-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/swiper/swiper.min.js?ver=5.3.6' id='swiper-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/share-link/share-link.min.js?ver=3.6.5' id='share-link-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js?ver=4.9.0' id='elementor-dialog-js'></script>
+<script id='elementor-frontend-js-before'>
 var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Partilhar no Facebook","shareOnTwitter":"Partilhar no Twitter","pinIt":"Fix\u00e1-lo","download":"Download","downloadImage":"Descarregar Imagem","fullscreen":"\u00c9cr\u00e3 Inteiro","zoom":"Zoom","share":"Partilhar","playVideo":"Reproduzir v\u00eddeo","previous":"Anterior","next":"Seguinte","close":"Fechar"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Port\u00e1til","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.6.5","is_static":false,"experimentalFeatures":{"e_import_export":true,"e_hidden_wordpress_widgets":true,"landing-pages":true,"elements-color-picker":true,"favorite-widgets":true,"admin-top-bar":true},"urls":{"assets":"https:\/\/mrpowercaps.com\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":147,"title":"Mr%20Power%20Caps%20-%20Mr%20Power%20Caps","excerpt":"","featuredImage":false}};
-</script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.6.5' id='elementor-frontend-js' defer></script>
-<script type="rocketlazyloadscript" src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/preloaded-modules.min.js?ver=3.6.5' id='preloaded-modules-js' defer></script>
-	<script type="rocketlazyloadscript">
+</script><a href="https://api.whatsapp.com/send?phone=5531975451805&text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20MR%20Power%20Caps"><img src="https://i.imgur.com/ryESuZ5.png" style="height:80px; position:fixed; bottom: 25px; right: 25px; z-index:99999;" data-selector="img"></a>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.6.5' id='elementor-frontend-js'></script>
+<script src='https://mrpowercaps.com/wp-content/plugins/elementor/assets/js/preloaded-modules.min.js?ver=3.6.5' id='preloaded-modules-js'></script>
+	<script>
 	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",(function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())}),!1);
-	</script><a href="https://api.whatsapp.com/send?phone=5531975451805&#038;text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20MR%20Power%20Caps"><img src="https://i.imgur.com/ryESuZ5.png" style="height:80px; position:fixed; bottom: 25px; right: 25px; z-index:99999;" data-selector="img"></a>
-	<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
-if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
-images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
-if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://mrpowercaps.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script>	<script>class RocketElementorAnimation{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}_detectAnimations(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this._listAnimationSettingsKeys(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this._animateElement(t)}catch(t){}})}_animateElement(t){const e=JSON.parse(t.dataset.settings),i=e._animation_delay||e.animation_delay||0,n=e[this.animationSettingKeys.find(t=>e[t])];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let s=setTimeout(()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this._removeAnimationSettings(t,e)},i);window.addEventListener("rocket-startLoading",function(){clearTimeout(s)})}_listAnimationSettingsKeys(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach(t=>{e.forEach(e=>{i.push(t+e)})}),i}_removeAnimationSettings(t,e){this._listAnimationSettingsKeys().forEach(t=>delete e[t]),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorAnimation;requestAnimationFrame(t._detectAnimations.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorAnimation.run);</script></body>
+	</script>
+		</body>
 <iframe width="1" height="0"
-src="https://ev.braip.com/ref?pl=plazzxwm&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.COOKIEMAR"></iframe>
+src="https://ev.braip.com/ref?pl=plaxegyn&ck=cherg7jz&af=afiy9dmj5&src=YOUT.cha.nat.do.jam.COOKIEMAR"></iframe>
 </html>
-
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1654338753 -->
